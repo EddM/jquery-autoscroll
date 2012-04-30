@@ -11,18 +11,23 @@ $.fn.autoScroll = (options) ->
     'page'      : 1
   }, options
   
-  @current_page = @settings.page
+  @currentPage = @settings.page
   @paging = false
+  @lastScrollPos = 0
+  
+  @scrollingDown = => $(this).scrollTop() > @lastScrollPos
   
   $(this).scroll =>
-    if !@paging && $(this).scrollTop() >= ($(document).height() - ($(this).height() + @settings.offset))
+    scrollingDown = @scrollingDown()
+    @lastScrollPos = $(this).scrollTop()
+    if !@paging && scrollingDown && $(this).scrollTop() >= ($(document).height() - ($(this).height() + @settings.offset))
       @paging = true
       @settings.loading()
       $.ajax @settings.url,
         dataType: 'js'
         data:
-          page: @current_page + 1
-        success: => @current_page += 1,
+          page: @currentPage + 1
+        success: => @currentPage += 1,
         complete: => 
           @paging = false
           @settings.completed()

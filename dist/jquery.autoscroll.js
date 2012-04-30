@@ -14,19 +14,26 @@
       },
       'page': 1
     }, options);
-    this.current_page = this.settings.page;
+    this.currentPage = this.settings.page;
     this.paging = false;
+    this.lastScrollPos = 0;
+    this.scrollingDown = function() {
+      return $(_this).scrollTop() > _this.lastScrollPos;
+    };
     return $(this).scroll(function() {
-      if (!_this.paging && $(_this).scrollTop() >= ($(document).height() - ($(_this).height() + _this.settings.offset))) {
+      var scrollingDown;
+      scrollingDown = _this.scrollingDown();
+      _this.lastScrollPos = $(_this).scrollTop();
+      if (!_this.paging && scrollingDown && $(_this).scrollTop() >= ($(document).height() - ($(_this).height() + _this.settings.offset))) {
         _this.paging = true;
         _this.settings.loading();
         return $.ajax(_this.settings.url, {
           dataType: 'js',
           data: {
-            page: _this.current_page + 1
+            page: _this.currentPage + 1
           },
           success: function() {
-            return _this.current_page += 1;
+            return _this.currentPage += 1;
           },
           complete: function() {
             _this.paging = false;
