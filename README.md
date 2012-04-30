@@ -7,14 +7,14 @@ One of those infinite-scrolling Ajax dealies.
 Include `jquery.autoscroll.js` in your page (found in `dist/`) -- after the jQuery library, obviously. Use it like this, I guess:
 
     $(window).autoScroll({
-			url: '/posts',
-			loading: function() { 
-				$("#spinner").show();
-			},
-			completed: function() {
-				$("#spinner").hide();
-			}
-		});
+        url: '/posts',
+        loading: function() { 
+            $("#spinner").show();
+        },
+        completed: function() {
+            $("#spinner").hide();
+        }
+    });
 		
 ## Contributing
 
