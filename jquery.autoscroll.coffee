@@ -24,7 +24,7 @@ $.fn.autoScroll = (options) ->
       @paging = true
       @settings.loading()
       $.ajax @settings.url,
-        dataType: 'js'
+        dataType: 'script'
         data:
           page: @currentPage + 1
         success: => @currentPage += 1,
